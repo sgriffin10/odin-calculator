@@ -2,7 +2,7 @@ const container = document.querySelector(".numbers-container");
 console.log(container);
 let max = 500;
 container.style.maxWidth = `${max}px`;
-container.style.maxHeight = `${max-200}px`;
+container.style.maxHeight = `${max}px`;
 container.backgroundColor = 'blue';
 
 // let gridSize = 25;
@@ -13,6 +13,7 @@ renderGrid();
 // let size = 25;
 function renderGrid (){
     container.style.gridTemplateColumns = `repeat(${4},${(max/4)}px)`;
+    container.style.columnGap = '0px';
     // container.style.gridTemplateColumns = `repeat(${size},1)`;
 
     for (let i = 0; i < 5; i++){
@@ -25,6 +26,7 @@ function renderGrid (){
                 div.classList.add('operator');
             }else if (i === 0){
                 div.textContent = `${topRow[j]}`; 
+                div.classList.add('top-row');
             } else if (i===4){
                 div.textContent = `${bottomRow[j]}`;
                 if (bottomRow[j] === '0'){
@@ -87,7 +89,7 @@ function operate(arr){
                 console.log("dividing");
                 if (secondNum === 0){
                     console.log("dividing by 0");
-                    total = "Can't divide by 0 you numpty!";
+                    total = "You divided by 0, numpty!";
                     break;
                 }
                 total = firstNum / secondNum;
@@ -99,7 +101,14 @@ function operate(arr){
 
     }
     resetArr();
+    if (typeof total === 'number' && total.toString().length > 10){
+        total = total.toFixed(10);
+    }
     changeDisplay(total);
+    if (typeof total !== 'number'){
+        total = 0;
+    }
+    
 }
 let arr = [];
 let periodFlag = false;
